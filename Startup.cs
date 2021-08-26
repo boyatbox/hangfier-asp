@@ -32,10 +32,11 @@ namespace api_vanilla
 
             services.AddControllers();
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("sqldb")));
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("sqldb")));
-            services.AddHangfireServer();
+            // services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("sqldb")));
+            // services.AddHangfire();
+            // services.AddHangfireServer();
 
-            
+            services.AddCors();
 
             services.AddSwaggerGen(c =>
             {
@@ -46,17 +47,20 @@ namespace api_vanilla
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+    
             if (env.IsDevelopment())
             {
-                app.UseHangfireDashboard();
                 app.UseDeveloperExceptionPage();
                 // app.UseDatabaseErrorPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api_vanilla v1"));
             }
+            app.UseCors(options => options.AllowAnyOrigin());  
 
-            app.UseHttpsRedirection();
+            // app.UseHangfireDashboard();
+            // app.UseHangfireServer(); 
+
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

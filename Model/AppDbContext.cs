@@ -38,10 +38,16 @@ namespace data
         public Blog Blog { get; set; }
     }
 
-     public class Profile
+    public class Profile
     {
         public int Id { get; set; }
-        public string FullName { get; set; }
-        
+        public string name { get; set; }
+        public int age { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }
+        public string address { get; set; }
+        public string city { get; set; }
+        public DateTime dob { get; set; }
     }
 }
