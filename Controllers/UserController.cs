@@ -15,15 +15,19 @@ namespace api_vanilla.Controllers
     public class UserController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public UserController(AppDbContext context)
+        private readonly ILogger<UserController> _logger;
+        public UserController(AppDbContext context,ILogger<UserController> logger)
         {
             _context = context;
+            _logger=logger;
         }
 
         [HttpGet]
         [Route("getall")]
         public async Task<ActionResult> Get()
         {
+            _logger.LogInformation($"{DateTime.Now} - getall");
+            await Task.Delay(1000);
             var data = await _context.Profiles.Select(o => new{id=o.Id,name=o.name}).ToListAsync();
             return Ok(data);
         }
@@ -32,6 +36,8 @@ namespace api_vanilla.Controllers
         [Route("getbyid")]
         public async Task<ActionResult> GetById([FromQuery]int id)
         {   
+            _logger.LogInformation($"{DateTime.Now} - GetById[{id}]");
+            await Task.Delay(1000);
             var data = await _context.Profiles.Where(o=>o.Id==id).Select(o => o).FirstOrDefaultAsync();
             if(data==null) return BadRequest();
             return Ok(data);
