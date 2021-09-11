@@ -27,7 +27,7 @@ namespace api_vanilla.Controllers
         public async Task<ActionResult> Get()
         {
             _logger.LogInformation($"{DateTime.Now} - getall");
-            await Task.Delay(1000);
+            await Task.Delay(500);
             var data = await _context.Profiles.Select(o => new{id=o.Id,name=o.name}).ToListAsync();
             return Ok(data);
         }
@@ -37,7 +37,7 @@ namespace api_vanilla.Controllers
         public async Task<ActionResult> GetById([FromQuery]int id)
         {   
             _logger.LogInformation($"{DateTime.Now} - GetById[{id}]");
-            await Task.Delay(1000);
+            await Task.Delay(500);
             var data = await _context.Profiles.Where(o=>o.Id==id).Select(o => o).FirstOrDefaultAsync();
             if(data==null) return BadRequest();
             return Ok(data);
